@@ -1,7 +1,10 @@
 //https://www.youtube.com/watch?v=H_drBNCoACs&t=56s
 //1:38 add x and 0
+//4:49 add field
+//6:52 add bot
 
 #include <SFML/Graphics.hpp>
+#include <time.h>
 
 using namespace sf;
 
@@ -47,7 +50,7 @@ int main()
     }
 
     int vib = 0;
-    Stav player(c);
+    Stav player(c), bot(c);
 
     while(window.isOpen())
     {
@@ -75,6 +78,9 @@ int main()
                             if(player.sprite[i].getGlobalBounds().contains(pos.x, pos.y))
                                 player.tik[i]  = true;
 
+                                int botstav = rand()% 9;
+                                bot.tik[botstav] = true;
+
                     }
                 }
         }
@@ -88,6 +94,13 @@ int main()
         }
 
         player.update(vib);
+
+        int biv = vib + 1;
+        if(biv == 3)
+            biv = 1;
+        bot.update(biv);
+
+
         window.clear(Color::White);
         if(vib == 0)
             for(int i = 0; i < 2; i++)
@@ -95,8 +108,13 @@ int main()
         else
             window.draw(fon);
             for(int i =  0;  i < 9;  i++)
+                {
                 if(player.tik[i])
                     window.draw(player.sprite[i]);
+
+                if(bot.tik[i])
+                    window.draw(bot.sprite[i]);
+                }
         window.display();
     }
 
